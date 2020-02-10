@@ -26,10 +26,15 @@ int main(void) {
 	}
 
 	char str [12];
-	char * mega_str = (char *)calloc(1, sizeof(char));
+	char ** mega_str = (char **)calloc(1, sizeof(char*));
+	int cnt = 0;
 	// we read the input file (in PL/0)
-	while (fscanf(fp, "%s", str) != EOF)
-		mega_str = dynamic_strcat(mega_str, str);
+	while (fscanf(fp, "%s", str) != EOF) {
+		cnt++;
+		mega_str = (char **)realloc(mega_str, sizeof(char*)*cnt);
+		mega_str[cnt-1] = (char*)calloc(1, sizeof(char));
+		mega_str[cnt-1] = dynamic_strcat(mega_str[cnt-1], str);
+	}
 	// while we read it (fscanf for EVERY string)
 		// we run some methods that determine what the word is
 			// check if a comment, if so then set comment var to 1? until newline OR */
@@ -49,5 +54,7 @@ int main(void) {
 	fclose(fp);
 	fp = fopen("output.txt", "w");
 
-	fprintf(fp, "%s", mega_str);
+	int i;
+	for (i = 0; i < cnt; i++)
+		fprintf(fp, "%s ", mega_str[i]);
 }
