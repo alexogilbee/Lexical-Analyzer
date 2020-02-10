@@ -50,11 +50,12 @@ int main(void) {
 
 		// we also want an output writer, or maybe just import the megastringconcat
 		// thing again, then swap input fp to output
-			
+
 	fclose(fp);
 	fp = fopen("output.txt", "w");
 
 	int i;
 	for (i = 0; i < cnt; i++)
 		fprintf(fp, "%s ", mega_str[i]);
+        fclose(fp);
 }
