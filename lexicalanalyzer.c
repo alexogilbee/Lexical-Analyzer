@@ -2,41 +2,18 @@
 #include <stdlib.h>
 #include <string.h>
 
-int nulsym = 1;
-int identsym = 2;
-int numbersym = 3;
-int plussym = 4;
-int minussym = 5;
-int multsym = 6;
-int slashsym = 7;
-int oddsym = 8;
-int eqlsym = 9;
-int neqsym = 10;
-int lessym = 11;
-int leqsym = 12;
-int gtrsym = 13;
-int geqsym = 14;
-int lparentsym = 15;
-int rparentsym = 16;
-int commasym = 17;
-int semicolonsym = 18;
-int periodsym = 19;
-int becomessym = 20;
-int beginsym = 21;
-int endsym = 22;
-int ifsym = 23;
-int thensym = 24;
-int whilesym = 25;
-int dosym = 26;
-int callsym = 27;
-int constsym = 28;
-int varsym = 29;
-int procsym = 30;
-int writesym = 31;
-int readsym = 32;
-int elsesym = 33;
 
 // globals
+
+typedef enum { 
+    nulsym = 1, identsym, numbersym, plussym, minussym,
+    multsym,  slashsym, oddsym, eqsym, neqsym, lessym, leqsym,
+    gtrsym, geqsym, lparentsym, rparentsym, commasym, semicolonsym,
+    periodsym, becomessym, beginsym, endsym, ifsym, thensym, 
+    whilesym, dosym, callsym, constsym, varsym, procsym, writesym,
+    readsym , elsesym 
+} token_type;
+
 char * reserved_words[] = {
     "const", "var", "procedure", "cal", "begin", "end", "if", "then", "else", "while", "do", "read", "write", "odd"
 };
@@ -127,6 +104,10 @@ int main(void) {
 		cnt += 1;
 	}
 	*/
+	
+	// begin output formatting:
+	fprintf(out, "Source Program: \n");
+	
 	// and copy to output file
 	char temp_char = fgetc(fp);
 	while (temp_char != EOF) {
