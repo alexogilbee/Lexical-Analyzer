@@ -170,6 +170,11 @@ int main(void) {
             }
         }
         
+        // check for special characters
+        if (is_special_symbol(c)) {
+            // do stuff
+        }
+        
         // filter out the commas, whitespace, etc. (i guess not commas)
         if (is_invisible_char(c)) {
             i += 1;
