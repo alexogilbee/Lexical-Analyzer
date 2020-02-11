@@ -195,6 +195,7 @@ int main(void) {
             printf("Reserved word found\n");
         }
         
+        // remember: let = word
 
         // 4 things to check: (return if any fail)
         // if let[0] is a number, check all for nonletters and return accordingly
