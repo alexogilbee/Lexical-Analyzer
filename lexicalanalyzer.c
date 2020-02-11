@@ -177,7 +177,7 @@ int main(void) {
         }
         
         // check if the string is a reserved word
-        char * word = {c};
+        char * word = {&c};
         int j = i + 1;
         
         // build word
@@ -198,7 +198,7 @@ int main(void) {
         // if let[0] is a letter, check if subsequent chars are letters or numbers ONLY
 
         // we also want an output writer, or maybe just import the megastringconcat
-        
+        i += 1;
     }
     
     fclose(fp);
