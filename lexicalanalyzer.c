@@ -9,6 +9,11 @@
 
 // globals
 
+typedef struct {
+	char * lexeme;
+	int token_type;
+} word;
+
 typedef enum { 
     nulsym = 1, identsym, numbersym, plussym, minussym,
     multsym,  slashsym, oddsym, eqsym, neqsym, lessym, leqsym,
@@ -176,7 +181,10 @@ int main(void) {
         printf("Error: Could not locate file.\n");
         exit(-1);
     }
-
+	word * word_list = (word *)calloc(1, sizeof(word));
+	int word_count = 0;
+	int temp_token;
+/*
     char str [12];
     char ** mega_str = (char **)calloc(1, sizeof(char*));
     int cnt = 0;
@@ -347,8 +355,33 @@ int main(void) {
         // we also want an output writer, or maybe just import the megastringconcat
         // ^ see below
         i = j;
+/*
+		word_count++;
+		word_list = (word *)realloc(word_list, sizeof(word) * word_count);
+		word_list[word_count - 1].lexeme = word;
+		word_list[word_count - 1].token_type = token;
+*/
     }
     
+	/*	TODO: implement word_count, temp_token, word_list and uncomment this
+	fprintf(out, "Lexeme Table: \n");
+	fprintf(out, "lexeme\t\ttoken type \n");
+
+	for (i = 0; i < word_count; i++) {
+		fprintf(out, "%s\t\t%d \n", word_list[i].lexeme, word_list[i].token_type);
+	}
+
+	fprintf(out, "Lexeme List \n");
+
+	for (i = 0; i < word_count; i++) {
+		temp_token = word_list[i].token_type;
+		fprintf(out, "%d ", temp_token);
+
+		if (temp_token == identsym || temp_token == numbersym)
+			fprintf(out, "%s ", word_list[i].lexeme);
+	}
+*/
+	free(word_count);
     fclose(fp);
     fclose(out);
 }
