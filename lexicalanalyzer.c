@@ -133,6 +133,7 @@ int main(void) {
     int program_length = strlen(program_string);
     while (i < program_length) {
         char c = program_string[i];
+        int token;
         
         // we run some methods that determine what the word is
         // check if a comment, if so then set comment var to 1? until newline OR */
@@ -181,29 +182,39 @@ int main(void) {
             continue;
         }
         
-        // check if the string is a reserved word
+        // build word
         char * word = {&c};
         int j = i + 1;
         
-        // build word
         while (! (is_invisible_char(program_string[j])) && ! (is_special_symbol(program_string[j])) && j < program_length) {
             word = dynamic_strcat(word, &program_string[j]);
             j += 1;
         }
+        
+        // check if the string is a reserved word
         if (is_reserved_word(word)) {
             // do stuff
             printf("Reserved word found\n");
+        } else {
+            // remember: let = word
+
+            // 4 things to check: (return if any fail)
+            // if let[0] is a number, check all for nonletters and return accordingly
+                // loop through all chars in word, see if they are numbers. if true: nothing, else: MalformedNumberError(), return/exit
+                // if true: treat as token #3 (literal), else: SyntaxError(), return/exit
+            // if let[0] is a number, token is a number, so check if strlen <= 5
+                // check len: if true, we're good. else: NumberTooBigError(), return/exit
+            // if let[0] is a LETTER, check if length <= 11
+                // if true: nothing (see below) else: StringTooLongError(), return/exit
+            // if let[0] is a letter, check if subsequent chars are letters or numbers ONLY (not exclusive)
+                // if true: token #2, else: MalformedStringError(), return/exit
+        
         }
         
-        // remember: let = word
-
-        // 4 things to check: (return if any fail)
-        // if let[0] is a number, check all for nonletters and return accordingly
-        // if let[0] is a number, token is a number, so check if strlen <= 5 (6 for null?)
-        // if let[0] is a LETTER, check if length <= 11 (12 null)
-        // if let[0] is a letter, check if subsequent chars are letters or numbers ONLY
+        // append {word/lexeme, token} to word_list[array]
 
         // we also want an output writer, or maybe just import the megastringconcat
+        // ^ see below
         i += 1;
     }
     
