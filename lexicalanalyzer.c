@@ -267,9 +267,10 @@ int main(void) {
         if (is_reserved_word(word)) {
             // do stuff
             printf("Reserved word found\n");
+            
+        // not reserved word
         } else {
-            // remember: let = word
-
+            // let = word
             // 4 things to check: (return if any fail)
             
             // if let[0] is a number, check all for nonletters and return accordingly
@@ -286,12 +287,23 @@ int main(void) {
                     NumberTooBigError();
                 }
             }
+            
+            // if let[0] is a LETTER,
+            if (is_letter(word[0])) {
+                // check if length <= 11
+                if (is_word_too_big(word, 11)) {
+                    // if true: nothing (see below) else: StringTooLongError(), return/exit
+                    StringTooLongError();   
+                }
                 
-                
-            // if let[0] is a LETTER, check if length <= 11
-                // if true: nothing (see below) else: StringTooLongError(), return/exit
-            // if let[0] is a letter, check if subsequent chars are letters or numbers ONLY (not exclusive)
-                // if true: token #2, else: MalformedStringError(), return/exit
+                // if let[0] is a letter, check if subsequent chars are letters or numbers ONLY (not exclusive)
+                if (is_letters_and_numbers(word)) {
+                    // if true: token #2, else: MalformedStringError(), return/exit
+                    token = 2;
+                } else {
+                    MalformedStringError();
+                }
+            }
         
         }
         
