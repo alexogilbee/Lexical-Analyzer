@@ -143,27 +143,27 @@ int is_word_too_big(char * word, int max) {
 }
 
 void MalformedNumberError(void) {
-    printf("Error: Malformed number.");
+    printf("Error: Malformed number.\n");
 }
 
 void SyntaxError(void) {
-    printf("Error: Syntax error.");
+    printf("Error: Syntax error.\n");
 }
 
 void NumberTooBigError(void) {
-    printf("Error: number too big");
+    printf("Error: number too big\n");
 }
 
 void StringTooLongError(void) {
-    printf("Error: string too long");
+    printf("Error: string too long\n");
 }
 
 void MalformedStringError(void) {
-    printf("Error: Malformed string. ");
+    printf("Error: Malformed string. \n");
 }
 
 void EOF_COMMENT_ERROR(void) {
-    printf("Error: EOF reached while in comment.");
+    printf("Error: EOF reached while in comment.\n");
 }
 
 
@@ -247,30 +247,57 @@ int main(void) {
             }
         }
         
-        // check for special characters
-        if (is_special_symbol(c)) {
-            // do stuff
-        }
-        
         // filter out the commas, whitespace, etc. (i guess not commas)
         if (is_invisible_char(c)) {
             i += 1;
             continue;
         }
         
-        // build word
-        char * word = {&c};
-        int j = i + 1;
+        // handle := operator
+        if (c == ':' && i < program_length) {
+            char new = program_string[i+1];
+            if (new == '=' && i < program_length + 1) {
+                i += 1;
+                continue;
+            }
+        }
         
-        while (! (is_invisible_char(program_string[j])) && ! (is_special_symbol(program_string[j])) && j < program_length) {
-            word = dynamic_strcat(word, &program_string[j]);
+        // build word
+        char * word = (char *) calloc(2, sizeof(char));
+        word[0] = c;
+        int j = i + 1;  
+        
+        while ( (is_invisible_char(program_string[j]) == 0) && (is_special_symbol(program_string[j]) == 0) && j < program_length) {
+            // printf("J: %d\n", j);
+            char new[2];
+            sprintf(new, "%c", program_string[j]);
+            
+            word = dynamic_strcat(word, new);
             j += 1;
         }
         
+        // make = into := before continuing
+        if (strcmp(word, "=") == 0 && program_string[i-1] == ':') {
+            word = ":=";
+        }
+        
+        printf("%s\n", word);
+        
+        
+        // check for special characters
+        if (is_special_symbol(c)) {
+            // do stuff 
+            
+            // get token
+            
+        }
         // check if the string is a reserved word
-        if (is_reserved_word(word)) {
+        else if (is_reserved_word(word)) {
             // do stuff
             printf("Reserved word found\n");
+           
+            // get token
+            
             
         // not reserved word
         } else {
@@ -281,13 +308,16 @@ int main(void) {
             if (is_number(word[0])) {
                 // if all numbers: treat as token #3 (literal), else: MalformedNumberError(), return/exit
                 if (is_only_numbers(word)) {
-                    token = 3;
+                    token = numbersym;
                 } else {
+                    printf("%s", word);
                     MalformedNumberError();
                 }
                 
                 // check strlen <= 5: if true, we're good. else: NumberTooBigError(), return/exit
                 if (is_word_too_big(word, 5)) {
+                
+                    printf("%s", word);
                     NumberTooBigError();
                 }
             }
@@ -297,14 +327,18 @@ int main(void) {
                 // check if length <= 11
                 if (is_word_too_big(word, 11)) {
                     // if true: nothing (see below) else: StringTooLongError(), return/exit
+                    
+                    printf("%s", word);
                     StringTooLongError();   
                 }
                 
                 // if let[0] is a letter, check if subsequent chars are letters or numbers ONLY (not exclusive)
                 if (is_letters_and_numbers(word)) {
                     // if true: token #2, else: MalformedStringError(), return/exit
-                    token = 2;
+                    token = identsym;
                 } else {
+                
+                    printf("%s", word);
                     MalformedStringError();
                 }
             }
@@ -315,7 +349,7 @@ int main(void) {
 
         // we also want an output writer, or maybe just import the megastringconcat
         // ^ see below
-        i += 1;
+        i = j;
     }
     
     fclose(fp);
