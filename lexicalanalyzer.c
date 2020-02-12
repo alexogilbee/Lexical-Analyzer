@@ -1,3 +1,5 @@
+//TODO TODO TODO  TODO: MEMORY LEAKS
+
 // Harry Sauers
 // Alex Ogilbee
 
@@ -184,6 +186,7 @@ int main(void) {
 	word * word_list = (word *)calloc(1, sizeof(word));
 	int word_count = 0;
 	int temp_token;
+	char * word;
 /*
     char str [12];
     char ** mega_str = (char **)calloc(1, sizeof(char*));
@@ -271,7 +274,7 @@ int main(void) {
         }
         
         // build word
-        char * word = (char *) calloc(2, sizeof(char));
+        word = (char *) calloc(2, sizeof(char));
         word[0] = c;
         int j = i + 1;  
         
@@ -381,7 +384,9 @@ int main(void) {
 			fprintf(out, "%s ", word_list[i].lexeme);
 	}
 */
-	free(word_count);
+	free(word);
+	free(word_list);
+	free(program_string);
     fclose(fp);
     fclose(out);
 }
