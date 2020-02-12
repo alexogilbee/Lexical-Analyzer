@@ -88,7 +88,7 @@ int is_invisible_char(char symbol) {
 // Checks if character is a number
 int is_number(char c) {
     int n = c - '0';
-    int[] nums = {0,1,2,3,4,5,6,7,8,9};
+    int nums[] = {0,1,2,3,4,5,6,7,8,9};
     
     for (int i = 0; i < 10; i++) {
         if (n == nums[i]) {
@@ -120,7 +120,7 @@ int is_only_numbers(char * word) {
             return 0;
         }
     }
-    return true;
+    return 1;
 }
 
 // checks if word is made up of ONLY numbers and/or letters
