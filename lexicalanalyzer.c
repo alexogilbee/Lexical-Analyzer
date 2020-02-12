@@ -85,6 +85,78 @@ int is_invisible_char(char symbol) {
     return 0;
 }
 
+// Checks if character is a number
+int is_number(char c) {
+    int n = c - '0';
+    int[] nums = {0,1,2,3,4,5,6,7,8,9};
+    
+    for (int i = 0; i < 10; i++) {
+        if (n == nums[i]) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+// Checks if character is a letter
+int is_letter(char c) {
+    int letter_min_1 = 'A';
+    int letter_max_1 = 'Z';
+    int letter_min_2 = 'a';
+    int letter_max_2 = 'z';
+    
+    // check if within valid letter ranges
+    if ( (c >= letter_min_1 && c <= letter_max_1) || (c >= letter_min_2 && c <= letter_max_2) ) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
+// checks if all chars are numbers
+int is_only_numbers(char * word) {
+    for (int i = 0; i < strlen(word); i++) {
+        if (! is_number(word[i])) {
+            return 0;
+        }
+    }
+    return true;
+}
+
+// checks if word is made up of ONLY numbers and/or letters
+int is_letters_and_numbers(char * word) {
+    for (int i = 0; i < strlen(word); i++) {
+        if (! is_letter(word[i]) && ! is_number(word[i])) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+// checks if word is too long
+int is_word_too_big(char * word, int max) {
+    if (strlen(word) <= max) {
+        return 0;
+    } else {
+        return 1;
+    }
+}
+
+void MalormedNumberError(void) {
+    printf("Error: Malformed number.");
+}
+
+void SyntaxError(void) {
+    printf("Error: Syntax error.");
+}
+
+void NumberTooBigError(void) {
+    printf("Error: number too big");
+}
+
+void StringTooLongError(void) {
+    printf("Error: string too long");
+}
 
 void EOF_COMMENT_ERROR(void) {
     printf("Error: EOF reached while in comment.");
@@ -199,11 +271,15 @@ int main(void) {
             // remember: let = word
 
             // 4 things to check: (return if any fail)
+            
             // if let[0] is a number, check all for nonletters and return accordingly
                 // loop through all chars in word, see if they are numbers. if true: nothing, else: MalformedNumberError(), return/exit
                 // if true: treat as token #3 (literal), else: SyntaxError(), return/exit
+                
             // if let[0] is a number, token is a number, so check if strlen <= 5
                 // check len: if true, we're good. else: NumberTooBigError(), return/exit
+                
+                
             // if let[0] is a LETTER, check if length <= 11
                 // if true: nothing (see below) else: StringTooLongError(), return/exit
             // if let[0] is a letter, check if subsequent chars are letters or numbers ONLY (not exclusive)
