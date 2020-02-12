@@ -273,11 +273,19 @@ int main(void) {
             // 4 things to check: (return if any fail)
             
             // if let[0] is a number, check all for nonletters and return accordingly
-                // loop through all chars in word, see if they are numbers. if true: nothing, else: MalformedNumberError(), return/exit
-                // if true: treat as token #3 (literal), else: SyntaxError(), return/exit
+            if (is_number(word[0]) {
+                // if all numbers: treat as token #3 (literal), else: MalformedNumberError(), return/exit
+                if (is_only_numbers(word)) {
+                    token = 3;
+                } else {
+                    MalformedNumberError();
+                }
                 
-            // if let[0] is a number, token is a number, so check if strlen <= 5
-                // check len: if true, we're good. else: NumberTooBigError(), return/exit
+                // check strlen <= 5: if true, we're good. else: NumberTooBigError(), return/exit
+                if (is_word_too_big(word, 5)) {
+                    NumberTooBigError();
+                }
+            }
                 
                 
             // if let[0] is a LETTER, check if length <= 11
