@@ -142,7 +142,7 @@ int is_word_too_big(char * word, int max) {
     }
 }
 
-void MalormedNumberError(void) {
+void MalformedNumberError(void) {
     printf("Error: Malformed number.");
 }
 
@@ -156,6 +156,10 @@ void NumberTooBigError(void) {
 
 void StringTooLongError(void) {
     printf("Error: string too long");
+}
+
+void MalformedStringError(void) {
+    printf("Error: Malformed string. ");
 }
 
 void EOF_COMMENT_ERROR(void) {
@@ -274,7 +278,7 @@ int main(void) {
             // 4 things to check: (return if any fail)
             
             // if let[0] is a number, check all for nonletters and return accordingly
-            if (is_number(word[0]) {
+            if (is_number(word[0])) {
                 // if all numbers: treat as token #3 (literal), else: MalformedNumberError(), return/exit
                 if (is_only_numbers(word)) {
                     token = 3;
