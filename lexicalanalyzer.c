@@ -276,13 +276,10 @@ int main(void) {
             j += 1;
         }
         
-        // make = into := before continuing
+        // make = into := before continuing -  becomessym
         if (strcmp(word, "=") == 0 && program_string[i-1] == ':') {
             word = ":=";
         }
-        
-        printf("%s\n", word);
-        
         
         // check for special characters
         if (is_special_symbol(c)) {
