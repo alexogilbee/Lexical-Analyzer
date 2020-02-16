@@ -151,30 +151,37 @@ int is_word_too_big(char * word, int max) {
 
 void MalformedNumberError(void) {
     printf("Error: Malformed number.\n");
+    exit(0);
 }
 
 void SyntaxError(void) {
     printf("Error: Syntax error.\n");
+    exit(0);
 }
 
 void NumberTooBigError(void) {
     printf("Error: number too big\n");
+    exit(0);
 }
 
 void StringTooLongError(void) {
     printf("Error: string too long\n");
+    exit(0);
 }
 
 void MalformedStringError(void) {
     printf("Error: Malformed string. \n");
+    exit(0);
 }
 
 void EOF_COMMENT_ERROR(void) {
     printf("Error: EOF reached while in comment.\n");
+    exit(0);
 }
 
 void InvalidSymbolError(void) {
     printf("Error: invalid symbol. \n");
+    exit(0);
 }
 
 
@@ -430,7 +437,7 @@ int main(void) {
             }
             
             // if let[0] is a LETTER,
-            if (is_letter(current_word[0])) {
+            else if (is_letter(current_word[0])) {
                 // check if length <= 11
                 if (is_word_too_big(current_word, 11)) {
                     // if true: nothing (see below) else: StringTooLongError(), return/exit
@@ -448,7 +455,7 @@ int main(void) {
                     printf("%s", current_word);
                     MalformedStringError();
                 }
-            } else {
+            } else if (is_special_symbol(current_word[0]) == 0){
                 InvalidSymbolError();
             }
         
