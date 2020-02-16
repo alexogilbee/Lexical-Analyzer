@@ -478,6 +478,8 @@ int main(void) {
 		if (word_list[i].token_type == identsym || word_list[i].token_type == numbersym)
 			fprintf(out, "%s ", word_list[i].lexeme);
 	}
+	
+	fprintf(out, "\n");
 
 	
 	/*
