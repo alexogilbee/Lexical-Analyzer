@@ -280,13 +280,10 @@ int main(void) {
         current_word[0] = c;
         int j = i + 1;  
         
-        if (is_special_symbol(current_word[0] == 0)) {
-        
+        if (is_special_symbol(current_word[0]) == 0) {
             while ( (is_invisible_char(program_string[j]) == 0) && (is_special_symbol(program_string[j]) == 0) && j < program_length) {
-                // printf("J: %d\n", j);
                 char new[2];
                 sprintf(new, "%c", program_string[j]);
-                
                 current_word = dynamic_strcat(current_word, new);
                 j += 1;
             }
