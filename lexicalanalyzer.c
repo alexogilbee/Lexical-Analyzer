@@ -14,7 +14,7 @@
 typedef struct {
 	char * lexeme;
 	int token_type;
-} word;
+} wordy;
 
 typedef enum { 
     nulsym = 1, identsym, numbersym, plussym, minussym,
@@ -183,10 +183,12 @@ int main(void) {
         printf("Error: Could not locate file.\n");
         exit(-1);
     }
-	word * word_list = (word *)calloc(1, sizeof(word));
+	wordy * word_list = (wordy *)calloc(1, sizeof(wordy));
 	int word_count = 0;
 	int temp_token;
-	char * word;
+	char * current_word;
+	word_list[0].lexeme = "poopy";
+	word_list[0].token_type = 22;
 /*
     char str [12];
     char ** mega_str = (char **)calloc(1, sizeof(char*));
@@ -274,8 +276,8 @@ int main(void) {
         }
         
         // build word
-        word = (char *) calloc(2, sizeof(char));
-        word[0] = c;
+        current_word = (char *) calloc(2, sizeof(char));
+        current_word[0] = c;
         int j = i + 1;  
         
         while ( (is_invisible_char(program_string[j]) == 0) && (is_special_symbol(program_string[j]) == 0) && j < program_length) {
@@ -283,13 +285,13 @@ int main(void) {
             char new[2];
             sprintf(new, "%c", program_string[j]);
             
-            word = dynamic_strcat(word, new);
+            current_word = dynamic_strcat(current_word, new);
             j += 1;
         }
         
         // make = into := before continuing -  becomessym
-        if (strcmp(word, "=") == 0 && program_string[i-1] == ':') {
-            word = ":=";
+        if (strcmp(current_word, "=") == 0 && program_string[i-1] == ':') {
+            current_word = ":=";
         }
         
         // check for special characters
@@ -300,7 +302,7 @@ int main(void) {
             
         }
         // check if the string is a reserved word
-        else if (is_reserved_word(word)) {
+        else if (is_reserved_word(current_word)) {
             // do stuff
             printf("Reserved word found\n");
            
@@ -313,40 +315,40 @@ int main(void) {
             // 4 things to check: (return if any fail)
             
             // if let[0] is a number, check all for nonletters and return accordingly
-            if (is_number(word[0])) {
+            if (is_number(current_word[0])) {
                 // if all numbers: treat as token #3 (literal), else: MalformedNumberError(), return/exit
-                if (is_only_numbers(word)) {
+                if (is_only_numbers(current_word)) {
                     token = numbersym;
                 } else {
-                    printf("%s", word);
+                    printf("%s", current_word);
                     MalformedNumberError();
                 }
                 
                 // check strlen <= 5: if true, we're good. else: NumberTooBigError(), return/exit
-                if (is_word_too_big(word, 5)) {
+                if (is_word_too_big(current_word, 5)) {
                 
-                    printf("%s", word);
+                    printf("%s", current_word);
                     NumberTooBigError();
                 }
             }
             
             // if let[0] is a LETTER,
-            if (is_letter(word[0])) {
+            if (is_letter(current_word[0])) {
                 // check if length <= 11
-                if (is_word_too_big(word, 11)) {
+                if (is_word_too_big(current_word, 11)) {
                     // if true: nothing (see below) else: StringTooLongError(), return/exit
                     
-                    printf("%s", word);
+                    printf("%s", current_word);
                     StringTooLongError();   
                 }
                 
                 // if let[0] is a letter, check if subsequent chars are letters or numbers ONLY (not exclusive)
-                if (is_letters_and_numbers(word)) {
+                if (is_letters_and_numbers(current_word)) {
                     // if true: token #2, else: MalformedStringError(), return/exit
                     token = identsym;
                 } else {
                 
-                    printf("%s", word);
+                    printf("%s", current_word);
                     MalformedStringError();
                 }
             }
@@ -358,12 +360,12 @@ int main(void) {
         // we also want an output writer, or maybe just import the megastringconcat
         // ^ see below
         i = j;
-/*
+
 		word_count++;
-		word_list = (word *)realloc(word_list, sizeof(word) * word_count);
-		word_list[word_count - 1].lexeme = word;
+		word_list = (wordy *)realloc(word_list, sizeof(wordy) * word_count);
+		word_list[word_count - 1].lexeme = current_word;
 		word_list[word_count - 1].token_type = token;
-*/
+
     }
     
 	/*	TODO: implement word_count, temp_token, word_list and uncomment this
@@ -384,7 +386,8 @@ int main(void) {
 			fprintf(out, "%s ", word_list[i].lexeme);
 	}
 */
-	free(word);
+
+	free(current_word);
 	free(word_list);
 	free(program_string);
     fclose(fp);
