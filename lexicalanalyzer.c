@@ -307,6 +307,69 @@ int main(void) {
             printf("Reserved word found\n");
            
             // get token
+            /*
+            "const", "var", "procedure", "cal", "begin", "end", "if", "then", "else", "while", "do", "read", "write", "odd"
+            
+             nulsym = 1, identsym, numbersym, plussym, minussym,
+                multsym,  slashsym, oddsym, eqsym, neqsym, lessym, leqsym,
+                gtrsym, geqsym, lparentsym, rparentsym, commasym, semicolonsym,
+                periodsym, becomessym, beginsym, endsym, ifsym, thensym, 
+                whilesym, dosym, callsym, constsym, varsym, procsym, writesym,
+                readsym , elsesym 
+            */
+            int index = -1;
+            
+            for (int i = 0; i < RESERVED_WORDS_LEN; i++) {
+                if (strcmp(reserved_words[i], current_word) == 0) {
+                    index = i;
+                    break;
+                }
+            }
+            
+            switch(index) {
+                case 0:
+                    token = constsym;
+                    break;
+                case 1:
+                    token = varsym;
+                    break;
+                case 2:
+                    token = procsym;
+                    break;
+                case 3: 
+                    token = callsym;
+                    break;
+                case 4:
+                    token = beginsym;
+                    break;
+                case 5:
+                    token = endsym;
+                    break;
+                case 6:
+                    token = ifsym;
+                    break;
+                case 7: 
+                    token = thensym;
+                    break;
+                case 8:
+                    token = elsesym;
+                    break;
+                case 9:
+                    token = whilesym;
+                    break;
+                case 10:
+                    token = dosym;
+                    break;
+                case 11:
+                    token = readsym;
+                    break;
+                case 12:
+                    token = writesym;
+                    break;
+                case 13:
+                    token = oddsym;
+                    break;
+            }
             
             
         // not reserved word
