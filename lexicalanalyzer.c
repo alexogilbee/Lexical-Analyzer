@@ -442,15 +442,14 @@ int main(void) {
     
 	fprintf(out, "\nLexeme List \n");
 
-    /*
+    
 	for (i = 0; i < word_count; i++) {
-		temp_token = word_list[i].token_type;
-		fprintf(out, "%d ", temp_token);
+		fprintf(out, "%d ", word_list[i].token_type);
 
-		if (temp_token == identsym || temp_token == numbersym)
+		if (word_list[i].token_type == identsym || word_list[i].token_type == numbersym)
 			fprintf(out, "%s ", word_list[i].lexeme);
 	}
-	*/
+
 	
 	/*
 	for (int i = 0; i < word_count; i++) {
