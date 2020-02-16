@@ -26,7 +26,7 @@ typedef enum {
 } token_type;
 
 char * reserved_words[] = {
-    "const", "var", "procedure", "cal", "begin", "end", "if", "then", "else", "while", "do", "read", "write", "odd"
+    "const", "var", "procedure", "call", "begin", "end", "if", "then", "else", "while", "do", "read", "write", "odd"
 };
 int RESERVED_WORDS_LEN = 14;
 
@@ -176,7 +176,7 @@ void EOF_COMMENT_ERROR(void) {
 
 int main(void) {
     // so we want to have an input reader
-    FILE *fp = fopen("input.txt", "r");
+    FILE *fp = fopen("input2.txt", "r");
     FILE *out = fopen("output.txt", "w");
     
     if (fp == NULL) {
@@ -266,15 +266,6 @@ int main(void) {
             continue;
         }
         
-        // handle := operator
-        if (c == ':' && i < program_length) {
-            char new = program_string[i+1];
-            if (new == '=' && i < program_length + 1) {
-                i += 1;
-                continue;
-            }
-        }
-        
         // build word
         current_word = (char *) calloc(2, sizeof(char));
         current_word[0] = c;
@@ -287,12 +278,7 @@ int main(void) {
                 current_word = dynamic_strcat(current_word, new);
                 j += 1;
             }
-        }
-        
-        // make = into := before continuing -  becomessym
-        if (strcmp(current_word, "=") == 0 && program_string[i-1] == ':') {
-            current_word = ":=";
-        }
+        }        
         
         // check for special characters
         if (is_special_symbol(c)) {
@@ -317,7 +303,7 @@ int main(void) {
                     token = rparentsym;
                     break;
                 case '=':
-                    token = becomessym;
+                    token = eqlsym;
                     break;
                 case ',':
                     token = commasym;
@@ -326,16 +312,31 @@ int main(void) {
                     token = periodsym;
                     break;
                 case '<':
-                    token = lessym;
+                    if (program_string[i+1] == '=') {
+                        current_word = "<=";
+                        token = leqsym;
+                    } else {
+                        token = lessym;
+                    }
                     break;
                 case '>':
-                    token = gtrsym;
+                    if (program_string[i+1] == '=') {
+                        current_word = ">=";
+                        token = geqsym;
+                    } else {
+                        token = gtrsym;
+                    }
                     break;
                 case ';':
                     token = semicolonsym;
                     break;
                 case ':':
-                    token = becomessym;
+                    if (program_string[i+1] == '=') {
+                        current_word = ":=";
+                        token = becomessym;
+                    } else {
+                        token = eqlsym;
+                    }
                     break;
             }
             
@@ -461,11 +462,11 @@ int main(void) {
     
 	/*	TODO: implement word_count, temp_token, word_list and uncomment this */
 	fprintf(out, "\nLexeme Table: \n");
-	fprintf(out, "lexeme\t\ttoken type \n");
+	fprintf(out, "lexeme\t\t\ttoken type \n");
 
     
 	for (i = 0; i < word_count; i++) {
-		fprintf(out, "%s\t\t%d \n", word_list[i].lexeme, word_list[i].token_type);
+		fprintf(out, "%s\t\t\t%d \n", word_list[i].lexeme, word_list[i].token_type);
 	}
 	
     
