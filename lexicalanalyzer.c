@@ -1,5 +1,3 @@
-//TODO TODO TODO  TODO: MEMORY LEAKS
-
 // Harry Sauers
 // Alex Ogilbee
 
@@ -40,8 +38,6 @@ char invisible_chars[] = {
 };
 int INVISIBLE_CHARS_LEN = 6;
 
-char * program_string = "";
-
 
 // dynamic strcat
 char * dynamic_strcat(char * base, char * added) {
@@ -55,9 +51,7 @@ char * dynamic_strcat(char * base, char * added) {
 
     // strcat and go
     strcpy(conjoined, base);
-//	char * ret = strcat(conjoined, added);
-//	free(conjoined);
-//	return ret;
+
     return strcat(conjoined, added);
 }
 
@@ -200,23 +194,7 @@ int main(void) {
 	int word_count = 0;
 	int temp_token;
 	char * current_word;
-//	program_string = (char *)calloc(1, sizeof(char));
-
-/*
-    char str [12];
-    char ** mega_str = (char **)calloc(1, sizeof(char*));
-    int cnt = 0;
-    
-    // read the input file (in PL/0)
-    /*
-    while (fscanf(fp, "%s", str) != EOF) {
-        mega_str = (char **) realloc(mega_str, sizeof(char*) * (cnt + 1));
-        mega_str[cnt] = (char*) calloc(1, sizeof(char));
-        mega_str[cnt] = dynamic_strcat(mega_str[cnt], str);
-        cnt += 1;
-    }
-    */
-    
+    char * program_string = (char *)calloc(1, sizeof(char));
     // begin output formatting:
     fprintf(out, "Source Program: \n");
 
@@ -227,7 +205,6 @@ int main(void) {
 	temp_char_str[1] = '\0';
     while (temp_char != EOF) {
         program_string = dynamic_strcat(program_string, temp_char_str);
-        
         fputc(temp_char, out);
         temp_char = fgetc(fp);
 		temp_char_str[0] = temp_char;
@@ -237,6 +214,7 @@ int main(void) {
     int i = 0;
     int in_comment = 0;
     int program_length = strlen(program_string);
+
     while (i < program_length) {
         char c = program_string[i];
         int token;
@@ -360,9 +338,6 @@ int main(void) {
         }
         // check if the string is a reserved word
         else if (is_reserved_word(current_word)) {
-            // do stuff
-            printf("Reserved word found\n");
-           
             // get token
             int index = -1;
             
@@ -417,7 +392,6 @@ int main(void) {
                     token = oddsym;
                     break;
             }
-            
             
         // not reserved word
         } else {
@@ -477,15 +451,19 @@ int main(void) {
 		word_list = (wordy *)realloc(word_list, sizeof(wordy) * word_count);
 		word_list[word_count - 1].lexeme = current_word;
 		word_list[word_count - 1].token_type = token;
+//		free(current_word);
     }
     
-	/*	TODO: implement word_count, temp_token, word_list and uncomment this */
+	// finish file output
 	fprintf(out, "\nLexeme Table: \n");
-	fprintf(out, "lexeme\t\t\ttoken type \n");
+	fprintf(out, "lexeme\t\ttoken type \n");
 
     
 	for (i = 0; i < word_count; i++) {
-		fprintf(out, "%s\t\t\t%d \n", word_list[i].lexeme, word_list[i].token_type);
+		if (word_list[i].token_type == procsym)
+			fprintf(out, "%s\t%d \n", word_list[i].lexeme, word_list[i].token_type);
+		else
+			fprintf(out, "%s\t\t%d \n", word_list[i].lexeme, word_list[i].token_type);
 	}
 	
     
@@ -501,20 +479,11 @@ int main(void) {
 	
 	fprintf(out, "\n");
 
-	
-	/*
-	for (int i = 0; i < word_count; i++) {
-	    fprintf(out, "%d ", word_list[i].token_type);
-	    if (word_list[i].token_type == identsym || word_list[i].token_type == numbersym)
-			fprintf(out, "%s ", word_list[i].lexeme);
-	}
-	*/
-    
 
 	free(current_word);
 	free(word_list);
 	free(program_string);
-    fclose(fp);
-    fclose(out);
+	fclose(fp);
+	fclose(out);
 }
 
