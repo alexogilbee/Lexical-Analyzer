@@ -55,7 +55,9 @@ char * dynamic_strcat(char * base, char * added) {
 
     // strcat and go
     strcpy(conjoined, base);
-
+//	char * ret = strcat(conjoined, added);
+//	free(conjoined);
+//	return ret;
     return strcat(conjoined, added);
 }
 
@@ -187,7 +189,7 @@ void InvalidSymbolError(void) {
 
 int main(void) {
     // so we want to have an input reader
-    FILE *fp = fopen("input2.txt", "r");
+    FILE *fp = fopen("input.txt", "r");
     FILE *out = fopen("output.txt", "w");
     
     if (fp == NULL) {
@@ -198,8 +200,8 @@ int main(void) {
 	int word_count = 0;
 	int temp_token;
 	char * current_word;
-	word_list[0].lexeme = "poopy";
-	word_list[0].token_type = 22;
+//	program_string = (char *)calloc(1, sizeof(char));
+
 /*
     char str [12];
     char ** mega_str = (char **)calloc(1, sizeof(char*));
@@ -217,16 +219,20 @@ int main(void) {
     
     // begin output formatting:
     fprintf(out, "Source Program: \n");
-    
+
     // and copy to output file
     char temp_char = fgetc(fp);
+	char temp_char_str[2];
+	temp_char_str[0] = temp_char;
+	temp_char_str[1] = '\0';
     while (temp_char != EOF) {
-        program_string = dynamic_strcat(program_string, &temp_char);
+        program_string = dynamic_strcat(program_string, temp_char_str);
         
         fputc(temp_char, out);
         temp_char = fgetc(fp);
+		temp_char_str[0] = temp_char;
     }
-    
+
     // while we read it
     int i = 0;
     int in_comment = 0;
@@ -511,3 +517,4 @@ int main(void) {
     fclose(fp);
     fclose(out);
 }
+
