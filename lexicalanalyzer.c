@@ -173,6 +173,10 @@ void EOF_COMMENT_ERROR(void) {
     printf("Error: EOF reached while in comment.\n");
 }
 
+void InvalidSymbolError(void) {
+    printf("Error: invalid symbol. \n");
+}
+
 
 int main(void) {
     // so we want to have an input reader
@@ -444,6 +448,8 @@ int main(void) {
                     printf("%s", current_word);
                     MalformedStringError();
                 }
+            } else {
+                InvalidSymbolError();
             }
         
         }
