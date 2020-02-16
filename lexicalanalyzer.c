@@ -365,19 +365,21 @@ int main(void) {
 		word_list = (wordy *)realloc(word_list, sizeof(wordy) * word_count);
 		word_list[word_count - 1].lexeme = current_word;
 		word_list[word_count - 1].token_type = token;
-
     }
     
-	/*	TODO: implement word_count, temp_token, word_list and uncomment this
-	fprintf(out, "Lexeme Table: \n");
+	/*	TODO: implement word_count, temp_token, word_list and uncomment this */
+	fprintf(out, "\nLexeme Table: \n");
 	fprintf(out, "lexeme\t\ttoken type \n");
 
+    
 	for (i = 0; i < word_count; i++) {
 		fprintf(out, "%s\t\t%d \n", word_list[i].lexeme, word_list[i].token_type);
 	}
+	
+    
+	fprintf(out, "\nLexeme List \n");
 
-	fprintf(out, "Lexeme List \n");
-
+    /*
 	for (i = 0; i < word_count; i++) {
 		temp_token = word_list[i].token_type;
 		fprintf(out, "%d ", temp_token);
@@ -385,7 +387,16 @@ int main(void) {
 		if (temp_token == identsym || temp_token == numbersym)
 			fprintf(out, "%s ", word_list[i].lexeme);
 	}
-*/
+	*/
+	
+	/*
+	for (int i = 0; i < word_count; i++) {
+	    fprintf(out, "%d ", word_list[i].token_type);
+	    if (word_list[i].token_type == identsym || word_list[i].token_type == numbersym)
+			fprintf(out, "%s ", word_list[i].lexeme);
+	}
+	*/
+    
 
 	free(current_word);
 	free(word_list);
