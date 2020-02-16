@@ -18,7 +18,7 @@ typedef struct {
 
 typedef enum { 
     nulsym = 1, identsym, numbersym, plussym, minussym,
-    multsym,  slashsym, oddsym, eqsym, neqsym, lessym, leqsym,
+    multsym,  slashsym, oddsym, eqlsym, neqsym, lessym, leqsym,
     gtrsym, geqsym, lparentsym, rparentsym, commasym, semicolonsym,
     periodsym, becomessym, beginsym, endsym, ifsym, thensym, 
     whilesym, dosym, callsym, constsym, varsym, procsym, writesym,
@@ -296,9 +296,48 @@ int main(void) {
         
         // check for special characters
         if (is_special_symbol(c)) {
-            // do stuff 
-            
             // get token
+            switch(c) {
+                case '+':
+                    token = plussym;
+                    break;
+                case '-':
+                    token = minussym;
+                    break;
+                case '*':
+                    token = multsym;
+                    break;
+                case '/':
+                    token = slashsym;
+                    break;
+                case '(':
+                    token = lparentsym;
+                    break;
+                case ')':
+                    token = rparentsym;
+                    break;
+                case '=':
+                    token = becomessym;
+                    break;
+                case ',':
+                    token = commasym;
+                    break;
+                case '.':
+                    token = periodsym;
+                    break;
+                case '<':
+                    token = lessym;
+                    break;
+                case '>':
+                    token = gtrsym;
+                    break;
+                case ';':
+                    token = semicolonsym;
+                    break;
+                case ':':
+                    token = becomessym;
+                    break;
+            }
             
         }
         // check if the string is a reserved word
@@ -307,16 +346,6 @@ int main(void) {
             printf("Reserved word found\n");
            
             // get token
-            /*
-            "const", "var", "procedure", "cal", "begin", "end", "if", "then", "else", "while", "do", "read", "write", "odd"
-            
-             nulsym = 1, identsym, numbersym, plussym, minussym,
-                multsym,  slashsym, oddsym, eqsym, neqsym, lessym, leqsym,
-                gtrsym, geqsym, lparentsym, rparentsym, commasym, semicolonsym,
-                periodsym, becomessym, beginsym, endsym, ifsym, thensym, 
-                whilesym, dosym, callsym, constsym, varsym, procsym, writesym,
-                readsym , elsesym 
-            */
             int index = -1;
             
             for (int i = 0; i < RESERVED_WORDS_LEN; i++) {
